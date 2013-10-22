@@ -13,3 +13,5 @@ Helper functions
   
   Eg. Invocation =>select * from table(matrix_generate(m,n)) 
    This UDTF generates a matrix of size mxn with random values and returns the matrix as table.
+
+Work in progress. Annoyance caused is regretted.
