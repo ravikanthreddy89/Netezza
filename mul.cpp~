@@ -1,0 +1,13 @@
+#include<iostream>
+#include "udxinc.h"
+
+using namespace nz::udx_ver2;
+
+class mul:public nz::udx_ver2::Udf{
+
+public:
+ mul(UdxInit *pInit):Udf(pInit){}
+
+  static nz::udx_ver2::Udf* instantiate(UdxInit *pInit);
+
+}

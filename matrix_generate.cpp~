@@ -1,0 +1,36 @@
+#include<iostream>
+#include "udxinc.h"
+
+using namespace nz::udx_ver2;
+
+class matrix_generate:public Udtf {
+
+private:
+  int rows;
+  int i,j,k;
+
+public:
+  matrix_generate(UdxInit *pInit):Udtf(pInit){}
+
+  static Udtf* instantiate(UdxInit*);
+
+  virtual void newInputRow(){
+    int32 r=int32Arg(0);
+    rows=r;
+    i=rows;
+  }
+
+  virtual DataAvailable nextOutputRow(){
+    if(i==0) return Done;
+    int32* ret=int32ReturnColumn(0);
+    i=i--;
+    return MoreData;
+
+  }
+
+};//end of class defintion
+
+Udtf* matrix_generate::instantiate(UdxInit *pInit){
+
+  return new matrix_generate(pInit);
+}
