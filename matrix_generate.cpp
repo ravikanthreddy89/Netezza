@@ -43,7 +43,7 @@ public:
   virtual DataAvailable nextOutputRow(){
      int32 *ret;
  
-     if(rows<0) return Done;
+     if(rows==0) return Done;
      
      for(j=0;j<cols;j++){
      ret=int32ReturnColumn(j);
