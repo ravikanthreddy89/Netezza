@@ -31,10 +31,11 @@ public:
 
     int nType=0;
    nType=shaper->argType(1);
-    char heading[20]="row";
+    char heading[sizeof(int32)];
     for(i=0;i<shaper->int32Arg(1);i++){
       nType=shaper->argType(1);
-      heading[0]=(char)i;
+      memcpy(heading,&i,sizeof(int32));
+     // heading[0]=(char)i;
       shaper->addOutputColumn(nType,(const char *)heading);
     }
    }
