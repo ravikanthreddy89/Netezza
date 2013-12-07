@@ -1,0 +1,3 @@
+drop function matrix_generate(int4,int4);
+drop aggregate cor(int4,int4);
+drop procedure correlation(int4,int4);

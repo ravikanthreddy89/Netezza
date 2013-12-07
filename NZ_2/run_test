@@ -1,0 +1,3 @@
+call correlation(200,10);
+select * from top_pairs order by cfactor desc limit 10;
+select * from output_own minus select * from output_inbult union select * from output_inbult minus select * from output_own;

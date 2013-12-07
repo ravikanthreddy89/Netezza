@@ -1,4 +1,5 @@
 #include<iostream>
+#include<string>
 #include "udxinc.h"
 
 using namespace nz::udx_ver2;
@@ -30,25 +31,25 @@ public:
    if(shaper->numArgs()!=2) throwUdxException("Expecting proper number of arguments ra nee ayya!!!");
 
     int nType=0;
-   nType=shaper->argType(1);
+    nType=shaper->argType(1);
     char heading[sizeof(int32)];
     for(i=0;i<shaper->int32Arg(1);i++){
       nType=shaper->argType(1);
-      memcpy(heading,&i,sizeof(int32));
-     // heading[0]=(char)i;
-      shaper->addOutputColumn(nType,(const char *)heading);
+      sprintf(heading,"X%d",(i+1));
+     //    shaper->addOutputColumn(nType,heading);
+     shaper->addOutputColumn(UDX_DOUBLE,heading);
     }
    }
 
   /*Output rows*/
   virtual DataAvailable nextOutputRow(){
-     int32 *ret;
+    double *ret;
  
      if(rows==0) return Done;
      
      for(j=0;j<cols;j++){
-     ret=int32ReturnColumn(j);
-     *ret=(rand()%99);
+     ret=doubleReturnColumn(j);
+     *ret=((rand()%99)+1);
       }
      rows=rows-1;
      return MoreData;

@@ -1,0 +1,96 @@
+create or replace procedure correlation(int4,int4) returns int4
+language nzplsql as
+begin_proc
+declare
+   rows int4;
+   cols int4;
+   stmt varchar;
+   qry varchar; 
+   temp varchar;
+   cal varchar;
+   temp_qry varchar;
+   start_time time;
+   end_time time;
+   time_taken time;
+   start time;
+   total_time_taken time;
+
+begin
+  rows:=$1;
+  cols:=$2;
+  --generate a data matrix
+  
+    select current_time into start;
+ 
+   select current_time into start_time;
+   create table example as (select * from table(matrix_generate(rows,cols))) distribute on random;
+   select current_time into end_time;
+   time_taken:= end_time-start_time;
+   --execute immediate 'insert into '|| reftablename ||' values(Time_data_matrix,'|| 'time_taken' ||')';
+   raise notice 'Time to generate data matrix  %',time_taken;
+  --generate statement to create the corelation matrix
+  qry:='create table output( X';
+
+  for i in 1..($2-1)
+    loop
+     qry:=qry || i ||' double, X';
+    end loop;
+   qry:=qry || $2 ||' double, row int)';
+ 
+   --raise notice '%',qry;
+   execute immediate qry;
+   raise notice 'Output table created';
+   stmt :='insert into output select ';
+
+
+-- correlation matrix building step.
+--==========================================================================   
+  select current_time into start_time;
+  
+   for i in 1..$2
+      loop
+      temp:= stmt;
+     for j in 1..($2-1)
+       loop
+      temp:= temp || 'nza..corr_agg(X'|| i ||',X'||j||'),';
+      end loop;
+      temp:=temp || 'nza..corr_agg(X'|| i|| ',X'|| $2|| '), '|| i||' from example';
+     --raise notice '%',temp;
+    execute immediate temp;
+  end loop;
+
+   select current_time into end_time;
+   time_taken:= end_time-start_time;
+   --execute immediate 'insert into '|| reftablename ||' values(Time_generate_correlation_matrix,'|| 'time_taken' ||')';
+   raise notice 'Time to generate correlation matrix  %',time_taken;
+
+-- correlation pair table generation step
+--============================================================================
+ create table top_pairs(i int, j int, cfactor double);
+
+ select current_time into start_time;
+  for i in 1..$2-1
+   loop
+    for j in (i+1)..$2
+      loop
+     cal:='insert into top_pairs select ' || i||',' ||j||',X'||j||' from output where row='|| i||'';
+     --raise notice '%',cal;
+     execute immediate cal;
+    end loop;
+  end loop;
+  
+   select current_time into end_time;
+   time_taken:= end_time-start_time;
+   --execute immediate 'insert into '|| reftablename ||' values(Time_top_10_pairs,'|| 'time_taken' ||')';
+   raise notice 'Time to extract top ten correlation pairs  %',time_taken;
+
+   total_time_taken=end_time-start;
+
+   --execute immediate 'insert into '|| reftablename ||' values(Time_taken_whole_process,'|| 'time_taken' ||')';
+   raise notice 'Total time taken %',total_time_taken;
+
+ 
+   return reftable;
+end;
+end_proc;
+

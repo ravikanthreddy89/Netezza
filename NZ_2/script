@@ -1,0 +1,2 @@
+nzudxcompile --sig "matrix_generate(int4,int4)" --return "table(any)" --class matrix_generate --version 2 ../NZ_1/matrix_generate.cpp --pw $1
+nzudxcompile ../NZ_1/cor.cpp -o cor.o --sig "cor(int4,int4)" --version 2 --return float --class cor --state "(double, double, double, double,double,double)" --pw $1

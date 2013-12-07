@@ -1,0 +1,8 @@
+drop table example;
+drop table output;
+drop table top_pairs;
+drop table outputz;
+drop table output_own;
+drop table output_inbult;
+drop table final_result;
+drop table nz_corr_matrix;
