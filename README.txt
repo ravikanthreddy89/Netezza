@@ -1,3 +1,10 @@
+
+Implementation of UDx to compute Pearson's correlation coefficient. 
+There is inbuilt analytic function which does the job. It returns the result as a one large char array. 
+The one provided in this repo returns a table. 
+
+
+
 Please follow the following steps to test the code.
 ===================================================================================
 
