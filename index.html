@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Netezza : Custom implementation of  Pearson&#39;s co-relation coefficient calculation analytic function available on netezza." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Netezza</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/ravikanthreddy89/Netezza">View on GitHub</a>
+
+          <h1 id="project_title">Netezza</h1>
+          <h2 id="project_tagline">Custom implementation of  Pearson&#39;s co-relation coefficient calculation analytic function available on netezza.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/ravikanthreddy89/Netezza/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/ravikanthreddy89/Netezza/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p>Implementation of UDx to compute Pearson's correlation coefficient. 
+There is inbuilt analytic function which does the job. It returns the result as a one large char array. 
+The one provided in this repo returns a table. </p>
+
+<h1>
+<a name="please-follow-the-following-steps-to-test-the-code" class="anchor" href="#please-follow-the-following-steps-to-test-the-code"><span class="octicon octicon-link"></span></a>Please follow the following steps to test the code.</h1>
+
+<p>Step 1: Compilation and Registration of UDxs</p>
+
+<ol>
+<li>Please find the bash script file named "script", which contains the commands for compilation and registration of UDxs.</li>
+<li>Run that script.</li>
+<li>Make sure the source files are in the same directory in which the bash script is being executed and the executable bit of the script is set.</li>
+</ol><p>Step 2: Creating Stored procedures</p>
+
+<ol>
+<li>File named "create_procedure" creates a stored procedure using NZ PL/SQL</li>
+<li>This procedures contains the whole process of creating a data matrix, generating correlation matrix    for the same,  extracting the top ten pairs and also prints the times for intermediate steps using raise notice</li>
+<li>This just registers the procedure, we have to call that procedure in the next step. 
+run as : nzsql -f create_procedure;</li>
+<li>There is another file "test" this file contains a procedure with verification of the output from UDx and output from netezza's inbuilt correlation matrix generation function.</li>
+<li>If the output at the end of the test is 0 rows that implies the output of UDx  is correct.</li>
+<li>It works by using "minus" operator that outputs values different in two tables.
+-&gt; run as : nzsql -f test</li>
+</ol><p>Step 3: Running tests</p>
+
+<ol>
+<li>File named "run_test" contains a simple call to the above store procedure.</li>
+<li>Please change the input values in this file.This has to be done manually. </li>
+<li>Execution of the below command does all the mentioned steps of creating input matrix, correlation matrix and extracting top 10 pairs.
+-&gt; run as: nzsql -f run_test;</li>
+</ol><p>Step 4: Purging </p>
+
+<ol>
+<li>Two files are provided for this purpose 1) purge_tables 2) purge_procedures.</li>
+<li>"purge_tables" will delete the tables created when the test is run.</li>
+<li>"purge_procedures" will delete/drop all the UDxs and procedures used for the
+purpose of testing.</li>
+</ol>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Netezza maintained by <a href="https://github.com/ravikanthreddy89">ravikanthreddy89</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
