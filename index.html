@@ -4,7 +4,7 @@
   <head>
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Netezza : Custom implementation of  Pearson&#39;s co-relation coefficient calculation analytic function available on netezza." />
+    <meta name="description" content="Netezza : # Matrix correlation computation using Netezza UDXs: study of computability and scalability." />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
@@ -19,7 +19,7 @@
           <a id="forkme_banner" href="https://github.com/ravikanthreddy89/Netezza">View on GitHub</a>
 
           <h1 id="project_title">Netezza</h1>
-          <h2 id="project_tagline">Custom implementation of  Pearson&#39;s co-relation coefficient calculation analytic function available on netezza.</h2>
+          <h2 id="project_tagline"># Matrix correlation computation using Netezza UDXs: study of computability and scalability.</h2>
 
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/ravikanthreddy89/Netezza/zipball/master">Download this project as a .zip file</a>
@@ -31,11 +31,16 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <p>Implementation of UDx to compute Pearson's correlation coefficient. 
-There is inbuilt analytic function which does the job. It returns the result as a one large char array. 
-The one provided in this repo returns a table. </p>
+        <p>This is an implementation of a simple matrix correlation computation function in <a href="http://www-01.ibm.com/software/data/netezza/">Netezza</a> that takes as input a matrix with raw data (e.g. Variables as columns and Observations as rows). There are many ways to compute correlation. In this project Pearson's coefficient of correlation is used. </p>
 
-<h1>
+<p>The code contains :</p>
+
+<ol>
+<li><p>C++ files that conatain UDxs to achieve the functionality.</p></li>
+<li><p>Scripts to compile and register these UDx on the Netezza database.</p></li>
+<li><p>Scripts to register stored procedures to automate the tests.</p></li>
+<li><p>Scripts to drop the registered UDxs and stored procedures.</p></li>
+</ol><h1>
 <a name="please-follow-the-following-steps-to-test-the-code" class="anchor" href="#please-follow-the-following-steps-to-test-the-code"><span class="octicon octicon-link"></span></a>Please follow the following steps to test the code.</h1>
 
 <p>Step 1: Compilation and Registration of UDxs</p>
